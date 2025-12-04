@@ -106,6 +106,33 @@ This application is instrumented with AWS X-Ray for end-to-end distributed traci
 
 X-Ray traces are retained for 30 days by default. For longer retention, consider exporting traces to S3 or CloudWatch Logs.
 
+## Security and Logging
+
+This application implements comprehensive logging for security investigations and audit compliance:
+
+### Configured Logging
+
+- **Lambda Function Logs**: Retained for 1 year in CloudWatch Logs with security context (source IP, user agent, request ID)
+- **API Gateway Access Logs**: Retained for 1 year with detailed request/response information
+- **VPC Flow Logs**: Captures all network traffic within the VPC for security analysis
+- **DynamoDB Point-in-Time Recovery**: Enabled for data protection and recovery
+
+### Accessing Logs
+
+1. **Lambda Logs**: Navigate to CloudWatch Logs → Log Groups → `/aws/lambda/apigw_handler`
+2. **API Gateway Logs**: Navigate to CloudWatch Logs → Log Groups → Look for API Gateway access log group
+3. **VPC Flow Logs**: Navigate to CloudWatch Logs → Log Groups → Look for VPC flow log group
+
+### Log Retention
+
+All logs are retained for 1 year to support security investigations and compliance requirements. Adjust retention periods in the CDK stack as needed.
+
+### Security Requirements
+
+This application requires the following logging services at the AWS account level:
+- **AWS CloudTrail**: Should be enabled to capture API calls for Lambda, DynamoDB, and other AWS services
+- **Recommended retention**: Minimum 90 days in CloudTrail, with longer-term storage in S3
+
 ## Cleanup 
 Run below script to delete AWS resources created by this sample stack.
 ```
