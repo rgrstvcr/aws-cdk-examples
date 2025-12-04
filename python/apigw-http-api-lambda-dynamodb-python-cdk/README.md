@@ -85,6 +85,27 @@ You should get below response
 {"message": "Successfully inserted data!"}
 ```
 
+## Monitoring and Observability
+
+This application is instrumented with AWS X-Ray for end-to-end distributed tracing:
+
+### Viewing X-Ray Traces
+
+1. Navigate to the [AWS X-Ray Console](https://console.aws.amazon.com/xray/home)
+2. Select **Service Map** to visualize the request flow: API Gateway → Lambda → DynamoDB
+3. Select **Traces** to view individual request traces with detailed timing information
+4. Use **Analytics** to identify performance bottlenecks and error patterns
+
+### What's Being Traced
+
+- **API Gateway**: All incoming HTTP requests and responses
+- **Lambda Function**: Function invocations, cold starts, and execution time
+- **DynamoDB**: All database operations (PutItem calls)
+
+### Trace Retention
+
+X-Ray traces are retained for 30 days by default. For longer retention, consider exporting traces to S3 or CloudWatch Logs.
+
 ## Cleanup 
 Run below script to delete AWS resources created by this sample stack.
 ```
